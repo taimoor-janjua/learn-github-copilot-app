@@ -40,6 +40,35 @@ describe('Task API', () => {
     expect(res.status).toBe(404);
   });
 
+  it('deletes a task via DELETE and returns 204', async () => {
+    const app = createApp();
+    const created = await request(app).post('/tasks').send({ title: 'Delete me' });
+
+    const deleted = await request(app).delete(`/tasks/${created.body.id}`);
+    expect(deleted.status).toBe(204);
+    expect(deleted.text).toBe('');
+
+    const fetched = await request(app).get(`/tasks/${created.body.id}`);
+    expect(fetched.status).toBe(404);
+
+    const list = await request(app).get('/tasks');
+    expect(list.body).toHaveLength(0);
+  });
+
+  it('returns 404 when deleting an unknown task', async () => {
+    const res = await request(createApp()).delete('/tasks/does-not-exist');
+    expect(res.status).toBe(404);
+    expect(res.body).toEqual({ error: 'Task not found' });
+  });
+
+  it('returns 404 when deleting the same task twice', async () => {
+    const app = createApp();
+    const created = await request(app).post('/tasks').send({ title: 'Once' });
+
+    expect((await request(app).delete(`/tasks/${created.body.id}`)).status).toBe(204);
+    expect((await request(app).delete(`/tasks/${created.body.id}`)).status).toBe(404);
+  });
+
   it('trims surrounding whitespace from the title', async () => {
     const res = await request(createApp()).post('/tasks').send({ title: '  Demo task  ' });
     expect(res.status).toBe(201);

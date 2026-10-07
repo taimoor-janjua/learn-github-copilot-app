@@ -42,5 +42,8 @@ export class TaskStore {
     for (const title of titles) this.create(title);
   }
 
-  // Exercise 2: add remove(id) so the API can support DELETE /tasks/:id.
+  /** Removes a task. Returns true if it existed, false otherwise. */
+  remove(id: string): boolean {
+    return this.tasks.delete(id);
+  }
 }
