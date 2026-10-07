@@ -34,7 +34,7 @@ export class TaskStore {
     const task = this.tasks.get(id);
     if (!task) return undefined;
     task.completed = completed;
-    // Demo bug (exercise 3): updatedAt is never refreshed here.
+    task.updatedAt = new Date().toISOString();
     return task;
   }
 

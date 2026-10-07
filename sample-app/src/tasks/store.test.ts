@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { TaskStore } from './store.js';
 
 describe('TaskStore', () => {
@@ -27,6 +27,26 @@ describe('TaskStore', () => {
     const updated = store.setCompleted(task.id, true);
 
     expect(updated?.completed).toBe(true);
+  });
+
+  it('refreshes updatedAt when completing a task', () => {
+    vi.useFakeTimers();
+    try {
+      vi.setSystemTime(new Date('2024-01-01T00:00:00.000Z'));
+      const store = new TaskStore();
+      const task = store.create('a');
+      const createdAt = task.createdAt;
+
+      vi.setSystemTime(new Date('2024-01-01T00:00:05.000Z'));
+      const updated = store.setCompleted(task.id, true)!;
+
+      expect(updated.updatedAt).toBe('2024-01-01T00:00:05.000Z');
+      expect(updated.updatedAt).not.toBe(createdAt);
+      expect(updated.updatedAt >= updated.createdAt).toBe(true);
+      expect(updated.createdAt).toBe(createdAt);
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it('returns undefined when completing a task that does not exist', () => {
