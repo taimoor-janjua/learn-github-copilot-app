@@ -16,7 +16,7 @@ export function createTaskRouter(store: TaskStore): Router {
         error: 'title is required and must be a non-empty string',
       });
     }
-    const task = store.create(title);
+    const task = store.create(title.trim());
     res.status(201).json(task);
   });
 
