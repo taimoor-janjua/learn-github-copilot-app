@@ -48,7 +48,7 @@ deliberately small and has a few **intentional gaps** so the agent has real work
 follow along:
 
 1. `POST /tasks` has **no input validation**.
-2. There is **no `DELETE /tasks/:id`** endpoint (and `TaskStore.remove()` is missing).
+2. ~~There is **no `DELETE /tasks/:id`** endpoint (and `TaskStore.remove()` is missing).~~ Done — see issue #2.
 3. `setCompleted` has a **subtle bug** — it never refreshes `updatedAt`.
 4. `GET /tasks` has **no `?completed=` filter**.
 

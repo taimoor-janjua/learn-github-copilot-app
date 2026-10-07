@@ -35,7 +35,7 @@ State is held **in memory**, so it resets on restart — easy to run an exercise
 These are the hooks for the [exercises](../exercises/README.md). Don't "fix" them in `main`:
 
 1. `POST /tasks` does **no input validation**.
-2. There is **no `DELETE /tasks/:id`** (and `TaskStore.remove()` is missing).
+2. ~~There is **no `DELETE /tasks/:id`** (and `TaskStore.remove()` is missing).~~ Done — see issue #2.
 3. `setCompleted` never refreshes `updatedAt` — a subtle bug.
 4. `GET /tasks` has **no `?completed=` filter**.
 
