@@ -33,5 +33,12 @@ export function createTaskRouter(store: TaskStore): Router {
     res.json(task);
   });
 
+  router.delete('/:id', (req, res) => {
+    if (!store.remove(req.params.id)) {
+      return res.status(404).json({ error: 'Task not found' });
+    }
+    res.status(204).end();
+  });
+
   return router;
 }

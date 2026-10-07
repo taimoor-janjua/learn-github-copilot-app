@@ -33,4 +33,22 @@ describe('TaskStore', () => {
     const store = new TaskStore();
     expect(store.setCompleted('missing', true)).toBeUndefined();
   });
+
+  it('removes an existing task', () => {
+    const store = new TaskStore();
+    const task = store.create('a');
+    store.create('b');
+
+    expect(store.remove(task.id)).toBe(true);
+    expect(store.get(task.id)).toBeUndefined();
+    expect(store.list()).toHaveLength(1);
+  });
+
+  it('returns false when removing a task that does not exist', () => {
+    const store = new TaskStore();
+    store.create('a');
+
+    expect(store.remove('missing')).toBe(false);
+    expect(store.list()).toHaveLength(1);
+  });
 });

@@ -26,6 +26,7 @@ npm start        # run the compiled server
 | `POST` | `/tasks` | Create a task from `{ "title": "..." }` |
 | `GET` | `/tasks/:id` | Get one task (404 if missing) |
 | `PATCH` | `/tasks/:id` | Set `{ "completed": true \| false }` |
+| `DELETE` | `/tasks/:id` | Delete a task → `204` (404 if missing) |
 
 State is held **in memory**, so it resets on restart — easy to run an exercise repeatably.
 
